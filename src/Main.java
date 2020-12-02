@@ -4,8 +4,6 @@ public class Main {
 
         Credentials info = new Credentials();
         new LoginPage(info.getLoginInfo());
-//        new GameFrame();
-
 
     }
 }

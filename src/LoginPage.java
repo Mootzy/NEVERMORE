@@ -27,7 +27,6 @@ public class LoginPage implements ActionListener, KeyListener {
 
   LoginPage(HashMap<String, String> loginInfoOriginal) {
 
-
     imageLabel.setBounds(480, 150, 500, 300);
     loginInfo = loginInfoOriginal;
     imageLabel.setVisible(true);
