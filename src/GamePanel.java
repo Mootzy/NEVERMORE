@@ -1,11 +1,19 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+
+/**
+ * @author Tyler Wallace
+ */
 
 @SuppressWarnings("unused")
 public class GamePanel extends JPanel implements ActionListener {
@@ -14,7 +22,6 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int PANEL_HEIGHT = 1000;
     static final int UNIT_SIZE = 35;
     static final int GAME_UNITS = (PANEL_WIDTH * PANEL_HEIGHT) / UNIT_SIZE;
-
     static final int DELAY = 100;
 
     final int x[] = new int[GAME_UNITS];
@@ -22,34 +29,27 @@ public class GamePanel extends JPanel implements ActionListener {
 
     boolean running = false;
 
-    final String welcomeText = "Welcome to Nevermore, Traveler...";
     Random random;
     Timer timer;
 
     char direction = ' ';
 
-    Toolkit toolkit = Toolkit.getDefaultToolkit();
-    MediaTracker tracker = new MediaTracker(this);
-    Image warriorIcon = toolkit.getImage("/Users/admin/Desktop/RPG/src/GameAssests/barbarian.png");
+    BufferedImage warriorIcon;
 
-
-
-    GamePanel(){
+    GamePanel() {
         super();
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
         this.requestFocus();
         this.addKeyListener(new MyKeyAdapter());
+
     }
 
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        drawFloor(g);
-        drawString(g, welcomeText);
-        drawClassRectangles(g);
-        drawImage(g,warriorIcon,50,200,300,450 );
+        drawWelcomeScreen(g);
     }
 
     public void move(){
@@ -78,11 +78,11 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
-    public void drawString(Graphics welcomeString,String welcomeStringText) {
+    public void drawString(Graphics welcomeString,String welcomeStringText,int xCoordinate, int yCoordinate,int fontSize) {
 
         welcomeString.setColor(Color.white);
-        welcomeString.setFont(new Font(null, Font.BOLD,50));
-        welcomeString.drawString(welcomeStringText,225,100);
+        welcomeString.setFont(new Font(null, Font.BOLD,fontSize));
+        welcomeString.drawString(welcomeStringText,xCoordinate,yCoordinate);
 
     }
 
@@ -133,8 +133,9 @@ public class GamePanel extends JPanel implements ActionListener {
         drawRectangle(g, Color.white,50,200,300,450);
         drawRectangle(g, Color.white, 550, 200, 300, 450);
         drawRectangle(g, Color.white, 1050, 200, 300, 450);
-
-
+        drawImage(g,returnImage("/Users/admin/Desktop/RPG/GameAssests/barbarian.png"),50,200,300,450 );
+        drawImage(g,returnImage("/Users/admin/Desktop/RPG/GameAssests/archer.png"),550,200,300,450 );
+        drawImage(g,returnImage("/Users/admin/Desktop/RPG/GameAssests/pointy-hat.png"),1050,200,300,450 );
 
     }
 
@@ -164,8 +165,27 @@ public class GamePanel extends JPanel implements ActionListener {
             }
         });
     }
+    public void drawWelcomeScreen(Graphics g){
+        String welcomeText = "Welcome to Nevermore, Traveler...";
+        String whatWillBeYourFate = " What Will Be Your Fate...?";
 
+        drawFloor(g);
+        drawString(g, welcomeText, 325, 100,50);
+        drawClassRectangles(g);
+        drawString(g, whatWillBeYourFate, 555, 135,20 );
 
+    }
+    public BufferedImage returnImage(String imagePath){
+//        String imagePath = "/Users/admin/Desktop/RPG/GameAssests/barbarian.png";
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(new File(imagePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        BufferedImage warriorIcon = new BufferedImage(200,200,BufferedImage.TYPE_USHORT_565_RGB);
+        Graphics g = warriorIcon.getGraphics();
 
-
+        return image;
+    }
 }
