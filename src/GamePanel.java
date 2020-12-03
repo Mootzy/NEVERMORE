@@ -4,8 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.ImageObserver;
 import java.util.Random;
 
+@SuppressWarnings("unused")
 public class GamePanel extends JPanel implements ActionListener {
 
     static final int PANEL_WIDTH = 1000;
@@ -26,6 +28,12 @@ public class GamePanel extends JPanel implements ActionListener {
 
     char direction = ' ';
 
+    Toolkit toolkit = Toolkit.getDefaultToolkit();
+    MediaTracker tracker = new MediaTracker(this);
+    Image warriorIcon = toolkit.getImage("/Users/admin/Desktop/RPG/src/GameAssests/barbarian.png");
+
+
+
     GamePanel(){
         super();
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
@@ -40,11 +48,8 @@ public class GamePanel extends JPanel implements ActionListener {
         super.paintComponent(g);
         drawFloor(g);
         drawString(g, welcomeText);
-        /*drawRectangle(g, Color.white,50,200,300,450);
-        drawRectangle(g, Color.white, 150, 200, 300, 450);
-        drawRectangle(g, Color.white, 250, 200, 300, 450);
-        */
         drawClassRectangles(g);
+        drawImage(g,warriorIcon,50,200,300,450 );
     }
 
     public void move(){
@@ -55,13 +60,14 @@ public class GamePanel extends JPanel implements ActionListener {
             case 'U':
 
 
-
-
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + direction);
         }
 
     }
 
-    public void drawRectangle(Graphics rectangle,Color outlineColor, int xCoordinate, int yCoordinate, int width, int height){
+    public void drawRectangle(Graphics rectangle, Color outlineColor, int xCoordinate, int yCoordinate, int width, int height){
         rectangle.setColor(outlineColor);
         rectangle.drawRect(xCoordinate,yCoordinate,width,height);
     }
@@ -104,7 +110,6 @@ public class GamePanel extends JPanel implements ActionListener {
 
         welcomeString.setColor(Color.white);
         welcomeString.setFont(new Font(null, Font.BOLD,50));
-        //welcomeString.drawString("Welcome to NeverMore, Traveler...",225,100);
 
         int x = 225, y = 100;
 
@@ -150,6 +155,14 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     public void gravity(){
 
+    }
+    public void drawImage(Graphics image, Image imageToDraw,int coordinateX, int coordinateY, int width, int height){
+        image.drawImage(imageToDraw, coordinateX, coordinateY, width, height, new ImageObserver() {
+            @Override
+            public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
+                return false;
+            }
+        });
     }
 
 

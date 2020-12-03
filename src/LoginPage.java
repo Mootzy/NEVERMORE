@@ -9,7 +9,9 @@ import java.util.HashMap;
 public class LoginPage implements ActionListener, KeyListener {
 
   JFrame loginFrame = new JFrame();
+
   JButton loginButton = new JButton("login");
+  JButton createAccountButton = new JButton("Create Account");
   JButton storeButton = new JButton("store");
 
   JLabel loginBanner = new JLabel(" NEVERMORE ");
@@ -27,8 +29,13 @@ public class LoginPage implements ActionListener, KeyListener {
 
   LoginPage(HashMap<String, String> loginInfoOriginal) {
 
-    imageLabel.setBounds(480, 150, 500, 300);
     loginInfo = loginInfoOriginal;
+    setConstraintsForContent();
+    addContentToFrame();
+    /*
+    ********Illustrates advantage of placing inside class's method***********
+
+    imageLabel.setBounds(480, 150, 500, 300);
     imageLabel.setVisible(true);
 
     loginBanner.setBounds(405, 50, 1000, 65);
@@ -50,13 +57,16 @@ public class LoginPage implements ActionListener, KeyListener {
     loginButton.addActionListener(this);
     loginButton.setForeground(Color.white);
 
-    // code to set Default focus of Root Pane to loginButton so user can just press the enter key to
-    // submit form
+    //Create account button
+    createAccountButton.setBounds(480, 675, 125, 25);
+    createAccountButton.setFocusable(false);
+    createAccountButton.addActionListener(this);
+
+
     loginFrame.getRootPane().setDefaultButton(loginButton);
     loginButton.requestFocus();
 
     loginFrame.getContentPane().setBackground(Color.black);
-    loginFrame.setBackground(Color.red);
     loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     loginFrame.setLocationRelativeTo(null);
     loginFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -69,15 +79,14 @@ public class LoginPage implements ActionListener, KeyListener {
     loginFrame.add(unField);
     loginFrame.add(pwField);
     loginFrame.add(loginButton);
+    loginFrame.add(createAccountButton);
     loginFrame.setTitle("Login");
     loginFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("skull.jpg"));
-    loginFrame.setLocationRelativeTo(null);
+    loginFrame.setLocationRelativeTo(null);*/
   }
 
-
-  public void doTheStuff(HashMap<String, String> loginInfoOriginal){
+  public void setConstraintsForContent(){
     imageLabel.setBounds(480, 150, 500, 300);
-    loginInfo = loginInfoOriginal;
     imageLabel.setVisible(true);
 
     loginBanner.setBounds(405, 50, 1000, 65);
@@ -99,13 +108,19 @@ public class LoginPage implements ActionListener, KeyListener {
     loginButton.addActionListener(this);
     loginButton.setForeground(Color.white);
 
-    // code to set Default focus of Root Pane to loginButton so user can just press the enter key to
-    // submit form
+    //Create account button
+    createAccountButton.setBounds(480, 675, 125, 25);
+    createAccountButton.setFocusable(false);
+    createAccountButton.addActionListener(this);
+
+
+  }
+
+  public void addContentToFrame(){
     loginFrame.getRootPane().setDefaultButton(loginButton);
     loginButton.requestFocus();
 
     loginFrame.getContentPane().setBackground(Color.black);
-    loginFrame.setBackground(Color.red);
     loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     loginFrame.setLocationRelativeTo(null);
     loginFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -118,11 +133,11 @@ public class LoginPage implements ActionListener, KeyListener {
     loginFrame.add(unField);
     loginFrame.add(pwField);
     loginFrame.add(loginButton);
+    loginFrame.add(createAccountButton);
     loginFrame.setTitle("Login");
     loginFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("skull.jpg"));
     loginFrame.setLocationRelativeTo(null);
   }
-
   @Override
   public void actionPerformed(ActionEvent e) {
 
