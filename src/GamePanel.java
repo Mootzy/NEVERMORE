@@ -3,11 +3,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
-import java.awt.geom.*;
 
 /**
  * @author Tyler Wallace
@@ -33,6 +31,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     int[] rectThree = {1050, 200, 300, 450};
 
     boolean running = false;
+    boolean selectedClass = false;
     boolean clickedWarrior = false;
     boolean clickedArcher = false;
     boolean clickedMage = false;
@@ -46,10 +45,14 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     /*ImageIcon imageIcon = new ImageIcon("");
     JLabel label = new JLabel(imageIcon);*/
 
+    //BufferedImage imageTest = returnImage("/Users/admin/Desktop/RPG/GameAssests/barbarian.png");
 
+    //Graphics g = (Graphics) imageTest ;
     GamePanel() {
 
         super();
+        //this.add(drawClickableImage(g,returnImage("/Users/admin/Desktop/RPG/GameAssests/barbarian.png"),50,200,300,450))
+
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
@@ -107,15 +110,29 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     public void mouseClicked(MouseEvent e) {
             //System.out.println("mouse clicked");
 
+        /*
+        int[] rectOne = {50,350,200,650};
+        int[] rectTwo = {550, 200, 300, 450};
+        */
+        //drawRectangle(g, Color.white,50,200,300,450);
+
            if (e.getX() >= rectOne[0] && e.getX() <= rectOne[1] && e.getY() >= rectOne[2] && e.getY() <= rectOne[3]){
-                System.out.println("mouseclicked in region of warrior rectangle");
+                System.out.println("mouse-clicked in region of warrior rectangle");
                 this.repaint(rectOne[0],rectOne[1],rectOne[2],rectOne[3]);
-                //this.setBackground(Color.white);
+                this.setVisible(false);
+                this.getRootPane().getTopLevelAncestor().setVisible(false);
+                new Level();
+                clickedWarrior = !clickedWarrior;
+                selectedClass = !selectedClass;
+                System.out.println(clickedWarrior);
+
+               if (clickedWarrior == true) {
+                   this.invalidate();
+                   new Level();
+                   this.removeAll();
+                   this.repaint();
+               }
             }
-
-
-
-
     }
     //550, 200, 300, 450
     public void archerMouseClicked(MouseEvent e){
@@ -188,6 +205,7 @@ System.out.println("release mouse");
 
     public void drawClassRectangles(Graphics g){
 
+        //drawClickableImage(g,returnImage("/Users/admin/Desktop/RPG/GameAssests/barbarian.png"),50,200,300,450  );
         drawRectangle(g, Color.white,50,200,300,450);
         drawRectangle(g, Color.white, 550, 200, 300, 450);
         drawRectangle(g, Color.white, 1050, 200, 300, 450);
@@ -230,8 +248,8 @@ System.out.println("release mouse");
 
     public void drawClickableImage(Graphics image, Image imageToDraw,int coordinateX, int coordinateY, int width, int height){
         JButton imageButton = new JButton();
-
         imageButton.setIcon((Icon) imageToDraw);
+
     }
 
     public void drawWelcomeScreen(Graphics g){
@@ -275,5 +293,9 @@ System.out.println("release mouse");
 
     }
 
+    public Boolean getSelectedClass(){
+        System.out.println(selectedClass);
+        return selectedClass;
+    }
 
 }

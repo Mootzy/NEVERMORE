@@ -1,13 +1,14 @@
 import javax.swing.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class GameFrame extends JFrame {
 
     int[] rectOne = {50,350,200,650};
+    GamePanel mainMenu;
+    Level level;
 
     GameFrame(){
-        this.add(new GamePanel());
+
+        this.add(mainMenu = new GamePanel());
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
@@ -16,4 +17,5 @@ public class GameFrame extends JFrame {
         this.setTitle("Tales of Nevermore");
         this.pack();
     }
+
 }
